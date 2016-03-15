@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="GameBuilder.IDE.Modules.SceneViewer.Views.SceneView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:gemini="http://schemas.timjones.tw/gemini"
+			 xmlns:openTk="clr-namespace:OpenTK;assembly=OpenTK.GLControl"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="300" d:DesignWidth="300">
+	<Grid>
+		<WindowsFormsHost Name="windowsFormsHost">
+			<openTk:GLControl  x:Name="glControl" Load="GLControl_Load" Paint="GLControl_Paint" TopLevel="False"/>
+		</WindowsFormsHost>
+		<!--<gemini:DrawingSurface x:Name="GraphicsControl"
+							   LoadContent="OnGraphicsControlLoadContent"
+							   Draw="OnGraphicsControlDraw" 
+							   MouseMove="OnGraphicsControlMouseMove"
+							   MouseLeftButtonDown="OnGraphicsControlHwndLButtonDown"
+							   MouseLeftButtonUp="OnGraphicsControlHwndLButtonUp"
+							   MouseWheel="OnGraphicsControlHwndMouseWheel"
+							   KeyDown="OnGraphicsControlKeyDown"
+							   KeyUp="OnGraphicsControlKeyUp" />-->
+	</Grid>
+</UserControl>

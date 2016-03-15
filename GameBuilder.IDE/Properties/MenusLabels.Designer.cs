@@ -22,14 +22,14 @@ namespace GameBuilder.IDE.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class MenusLabels {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal MenusLabels() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace GameBuilder.IDE.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GameBuilder.IDE.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GameBuilder.IDE.Properties.MenusLabels", typeof(MenusLabels).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,29 @@ namespace GameBuilder.IDE.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GameMaker.
+        ///   Looks up a localized string similar to _Run Project.
         /// </summary>
-        internal static string _ApplicationName {
+        internal static string Debug_RunProject_Text {
             get {
-                return ResourceManager.GetString("_ApplicationName", resourceCulture);
+                return ResourceManager.GetString("Debug_RunProject_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run the currently loaded project.
+        /// </summary>
+        internal static string Debug_RunProject_Tooltip {
+            get {
+                return ResourceManager.GetString("Debug_RunProject_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Debug.
+        /// </summary>
+        internal static string Debug_Text {
+            get {
+                return ResourceManager.GetString("Debug_Text", resourceCulture);
             }
         }
     }
