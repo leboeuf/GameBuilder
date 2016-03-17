@@ -48,12 +48,20 @@
       <HintPath>..\packages\GeminiWpf.0.6.2\lib\net45\Gemini.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Gemini.Modules.CodeEditor, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gemini.Modules.CodeEditor.0.6.2\lib\net45\Gemini.Modules.CodeEditor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Gemini.Modules.Inspector, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gemini.Modules.Inspector.0.6.2\lib\net45\Gemini.Modules.Inspector.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Gemini.Modules.Output, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gemini.Modules.Output.0.6.2\lib\net45\Gemini.Modules.Output.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
@@ -128,6 +136,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Modules\ShaderEditor\Commands\ViewShaderEditorCommandDefinition.cs" />
+    <Compile Include="Modules\ShaderEditor\Commands\ViewShaderEditorCommandHandler.cs" />
+    <Compile Include="Modules\ShaderEditor\MenuDefinitions.cs" />
+    <Compile Include="Modules\ShaderEditor\Module.cs" />
+    <Compile Include="Modules\ShaderEditor\ViewModels\ShaderEditorViewModel.cs" />
+    <Compile Include="Modules\ShaderEditor\Views\IShaderEditorView.cs" />
+    <Compile Include="Modules\ShaderEditor\Views\ShaderEditorView.xaml.cs">
+      <DependentUpon>ShaderEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\MenusLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -192,7 +209,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Modules\ShaderEditor\Views\ShaderEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -126,4 +126,10 @@
   <data name="Debug_Text" xml:space="preserve">
     <value>_Debug</value>
   </data>
+  <data name="View_ShaderEditor_Text" xml:space="preserve">
+    <value>Shader _Editor</value>
+  </data>
+  <data name="View_ShaderEditor_Tooltip" xml:space="preserve">
+    <value>Opens the Shader Editor</value>
+  </data>
 </root>

@@ -86,5 +86,23 @@ namespace GameBuilder.IDE.Properties {
                 return ResourceManager.GetString("Debug_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shader _Editor.
+        /// </summary>
+        internal static string View_ShaderEditor_Text {
+            get {
+                return ResourceManager.GetString("View_ShaderEditor_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the Shader Editor.
+        /// </summary>
+        internal static string View_ShaderEditor_Tooltip {
+            get {
+                return ResourceManager.GetString("View_ShaderEditor_Tooltip", resourceCulture);
+            }
+        }
     }
 }

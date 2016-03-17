@@ -53,6 +53,12 @@ namespace GameBuilder.Library.OpenGL
             buffer.Load();
         }
 
+        public void ReplaceShader(ShaderType fragmentShader, string shaderCode)
+        {
+            var vertexShaderCode = shader.VertexSource;
+            shader = new Shader(ref vertexShaderCode, ref shaderCode);
+        }
+
         public void Draw(GLControl glControl)
         {
             GL.Viewport(0, 0, Width, Height);

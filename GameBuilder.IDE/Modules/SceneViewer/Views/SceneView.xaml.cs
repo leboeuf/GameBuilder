@@ -9,16 +9,20 @@ using OpenTK.Graphics.OpenGL4;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using UserControl = System.Windows.Controls.UserControl;
+using System.Windows.Media;
 
 namespace GameBuilder.IDE.Modules.SceneViewer.Views
 {
     /// <summary>
     /// Interaction logic for SceneView.xaml
     /// </summary>
+    /// <remarks>
+    /// GLControl loop from http://www.opentk.com/node/4100
+    /// </remarks>
     public partial class SceneView : UserControl, ISceneView, IDisposable
     {
         private readonly IOutput _output;
-        private readonly OpenGLManager _openGLManager = new OpenGLManager();
+        public OpenGLManager _openGLManager = new OpenGLManager();
 
         // A yaw and pitch applied to the viewport based on input
         private System.Windows.Point _previousPosition;
@@ -106,17 +110,31 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
         private void GLControl_Paint(object sender, PaintEventArgs e)
         {
             _openGLManager.Draw(glControl);
-            tick();
         }
 
         private void GLControl_Load(object sender, EventArgs e)
         {
             _openGLManager.Load(glControl);
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
 
-        private void tick()
+        private void CompositionTarget_Rendering(object sender, EventArgs e)
         {
             _openGLManager.Update(glControl);
+            glControl.Invalidate();
+        }
+
+        public void ReplaceShader(ShaderType shaderType, string shaderCode)
+        {
+            try
+            {
+                _openGLManager.ReplaceShader(shaderType, shaderCode);
+                glControl.Invalidate();
+            }
+            catch (ApplicationException)
+            {
+                // Shader contains errors, do nothing.
+            }
         }
     }
 }

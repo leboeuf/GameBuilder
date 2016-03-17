@@ -2,6 +2,8 @@
 using System.ComponentModel.Composition;
 using GameBuilder.IDE.Modules.SceneViewer.Views;
 using Gemini.Framework;
+using OpenTK.Graphics.OpenGL4;
+using GameBuilder.IDE.Utils;
 
 namespace GameBuilder.IDE.Modules.SceneViewer.ViewModels
 {
@@ -49,5 +51,10 @@ namespace GameBuilder.IDE.Modules.SceneViewer.ViewModels
 
             base.OnDeactivate(close);
         }
-	}
+
+        internal void ReplaceShader(ShaderType shaderType, string shaderCode)
+        {
+            _sceneView.ReplaceShader(shaderType, shaderCode);
+        }
+    }
 }
