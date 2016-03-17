@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cameras\FreeCamera.cs" />
+    <Compile Include="Cameras\ICamera.cs" />
     <Compile Include="OpenGL\Buffers\VertexFloatBuffer.cs" />
     <Compile Include="OpenGL\OpenGLManager.cs" />
     <Compile Include="OpenGL\Shaders\Shader.cs" />

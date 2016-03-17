@@ -136,6 +136,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Modules\Inspector\InspectorExtensions.cs" />
+    <Compile Include="Modules\Inspector\Inspectors\Vector3\Vector3EditorModel.cs" />
+    <Compile Include="Modules\Inspector\Inspectors\Vector3\Vector3EditorView.xaml.cs">
+      <DependentUpon>Vector3EditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\ShaderEditor\Commands\ViewShaderEditorCommandDefinition.cs" />
     <Compile Include="Modules\ShaderEditor\Commands\ViewShaderEditorCommandHandler.cs" />
     <Compile Include="Modules\ShaderEditor\MenuDefinitions.cs" />
@@ -205,6 +210,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Modules\Inspector\Inspectors\Vector3\Vector3EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\SceneViewer\Views\SceneView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -4,6 +4,7 @@ using System.Linq;
 using GameBuilder.IDE.Modules.SceneViewer.ViewModels;
 using Gemini.Framework;
 using Gemini.Modules.Inspector;
+using GameBuilder.IDE.Modules.Inspector;
 
 namespace GameBuilder.IDE.Modules.SceneViewer
 {
@@ -28,11 +29,11 @@ namespace GameBuilder.IDE.Modules.SceneViewer
             var sceneViewModel = Shell.Documents.OfType<SceneViewModel>().FirstOrDefault();
 	        if (sceneViewModel == null) return;
 
-	        _inspectorTool.SelectedObject = new InspectableObjectBuilder().WithObjectProperties(Shell.ActiveItem, pd => true).ToInspectableObject();
+            //_inspectorTool.SelectedObject = new InspectableObjectBuilder().WithObjectProperties(Shell.ActiveItem, pd => true).ToInspectableObject();
 
-	        //_inspectorTool.SelectedObject = new InspectableObjectBuilder()
-	        //    .WithVector3Editor(sceneViewModel, x => x.Position)
-	        //    .ToInspectableObject();
-	    }
+            //_inspectorTool.SelectedObject = new InspectableObjectBuilder()
+            //    .WithVector3Editor(sceneViewModel, x => x.CameraPosition)
+            //    .ToInspectableObject();
+        }
 	}
 }

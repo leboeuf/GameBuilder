@@ -8,6 +8,7 @@ using GameBuilder.Library.OpenGL.Buffers;
 using GameBuilder.Library.OpenGL.Shaders;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using GameBuilder.Library.Cameras;
 
 namespace GameBuilder.Library.OpenGL
 {
@@ -17,23 +18,76 @@ namespace GameBuilder.Library.OpenGL
         private Matrix4 WorldMatrix;
         private Matrix4 ModelviewMatrix;
 
-        private Vector3 CameraPosition;
+        private Vector3 cameraPosition;
+        private Vector3 cameraRotation;
+        private Vector3 modelViewMatrixTranslationVector;
+        private Vector3 projectionMatrixVector;
+
+        public FreeCamera Camera = new FreeCamera();
 
         private Shader shader;
         private VertexFloatBuffer buffer;
 
-        private int Width = 200;
-        private int Height = 200;
+        public Vector3 CameraPosition
+        {
+            get
+            {
+                return cameraPosition;
+            }
+
+            set
+            {
+                cameraPosition = value;
+            }
+        }
+        public Vector3 CameraRotation
+        {
+            get
+            {
+                return cameraRotation;
+            }
+
+            set
+            {
+                cameraRotation = value;
+            }
+        }
+        public Vector3 ModelViewMatrixTranslationVector
+        {
+            get
+            {
+                return modelViewMatrixTranslationVector;
+            }
+
+            set
+            {
+                modelViewMatrixTranslationVector = value;
+            }
+        }
+        public Vector3 ProjectionMatrixVector
+        {
+            get
+            {
+                return projectionMatrixVector;
+            }
+
+            set
+            {
+                projectionMatrixVector = value;
+            }
+        }
 
         public void Load(GLControl glControl)
         {
             GL.ClearColor(Color.CornflowerBlue);
 
-            ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.5f, 10000.0f);
+            ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, glControl.Width / (float)glControl.Height, 0.5f, 10000.0f);
             WorldMatrix = new Matrix4();
             ModelviewMatrix = new Matrix4();
 
             CameraPosition = new Vector3(0.5f, 0.5f, 0);
+            ModelViewMatrixTranslationVector = new Vector3(0.0f, 0.0f, -2.0f);
+            ProjectionMatrixVector = new Vector3(glControl.Width / (float)glControl.Height, 0.5f, 10000.0f);
 
             // Setup the shader
             var shaderManager = new ShaderManager();
@@ -41,13 +95,52 @@ namespace GameBuilder.Library.OpenGL
             var fragment_source = shaderManager.LoadShader(ShaderType.FragmentShader, "test1");
 
             shader = new Shader(ref vertex_source, ref fragment_source);
-
+            /*
             //setup the vertex buffer [vbo]
             buffer = new VertexFloatBuffer(VertexFormat.XYZ_COLOR, 3);
             //just a triangle with full r g b
-            buffer.AddVertex(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
-            buffer.AddVertex(0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
-            buffer.AddVertex(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+            buffer.AddVertex(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.8f);
+            buffer.AddVertex(0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.8f);
+            buffer.AddVertex(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            */
+
+            buffer = new VertexFloatBuffer(VertexFormat.XYZ_COLOR, 36);
+            buffer.AddVertex(-1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(-1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+            buffer.AddVertex(1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.8f);
 
             buffer.IndexFromLength();
             buffer.Load();
@@ -61,7 +154,7 @@ namespace GameBuilder.Library.OpenGL
 
         public void Draw(GLControl glControl)
         {
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, glControl.Width, glControl.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.UseProgram(shader.Program);
@@ -73,7 +166,8 @@ namespace GameBuilder.Library.OpenGL
 
         public void Update(GLControl glControl)
         {
-            CameraPosition.X += 0.001f;
+            Camera.Update();
+            //CameraPosition.X -= 0.001f;
 
             //prepare data to shader
 
@@ -81,13 +175,22 @@ namespace GameBuilder.Library.OpenGL
             WorldMatrix = Matrix4.CreateTranslation(-CameraPosition);
 
             //set out triangle position with the modelview matrix
-            ModelviewMatrix = Matrix4.CreateTranslation(0.0f, 0.0f, -2.0f);
+            //ModelviewMatrix = Matrix4.CreateTranslation(0.0f, 0.0f, -2.0f);
+            ModelviewMatrix = Matrix4.CreateTranslation(ModelViewMatrixTranslationVector);
 
+            //ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, ProjectionMatrixVector.X, ProjectionMatrixVector.Y, ProjectionMatrixVector.Z);
+            /*
+            ModelviewMatrix = Matrix4.CreateRotationX(CameraRotation.X);
+            ModelviewMatrix = Matrix4.CreateRotationY(CameraRotation.Y);
+            ModelviewMatrix = Matrix4.CreateRotationZ(CameraRotation.Z);
+            */
             //combine all matrices
             //the different between GL and GLSL with matrix order
             //GL   modelview * worldview * projection;
             //GLSL projection * worldview * modelview;
-            Matrix4 MVP_Matrix = ModelviewMatrix * WorldMatrix * ProjectionMatrix;
+            //Matrix4 MVP_Matrix = ModelviewMatrix * WorldMatrix * ProjectionMatrix;
+            Matrix4 MVP_Matrix = Camera.ViewMatrix * WorldMatrix * Camera.ProjectionMatrix;
+
 
             //send to shader
             GL.UseProgram(shader.Program);

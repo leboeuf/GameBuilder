@@ -8,8 +8,8 @@
 			 mc:Ignorable="d" 
 			 d:DesignHeight="300" d:DesignWidth="300">
 	<Grid>
-		<WindowsFormsHost Name="windowsFormsHost">
-			<openTk:GLControl  x:Name="glControl" Load="GLControl_Load" Paint="GLControl_Paint" TopLevel="False"/>
+		<WindowsFormsHost Name="windowsFormsHost" KeyDown="OnGraphicsControlKeyDown" KeyUp="OnGraphicsControlKeyUp" MouseMove="OnGraphicsControlMouseMove">
+            <openTk:GLControl  x:Name="glControl" Load="GLControl_Load" Paint="GLControl_Paint" TopLevel="False" />
 		</WindowsFormsHost>
 		<!--<gemini:DrawingSurface x:Name="GraphicsControl"
 							   LoadContent="OnGraphicsControlLoadContent"

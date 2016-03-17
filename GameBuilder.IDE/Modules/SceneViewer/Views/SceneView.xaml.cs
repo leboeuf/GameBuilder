@@ -10,6 +10,8 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using UserControl = System.Windows.Controls.UserControl;
 using System.Windows.Media;
+using Gemini.Modules.Inspector;
+using GameBuilder.IDE.Modules.Inspector;
 
 namespace GameBuilder.IDE.Modules.SceneViewer.Views
 {
@@ -28,6 +30,14 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
         private System.Windows.Point _previousPosition;
         private float _yaw = 0.5f;
         private float _pitch = 0.2f;
+
+        public OpenGLManager OpenGLManager
+        {
+            get
+            {
+                return _openGLManager;
+            }
+        }
 
         public SceneView()
         {
@@ -135,6 +145,11 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
             {
                 // Shader contains errors, do nothing.
             }
+        }
+
+        public void Invalidate()
+        {
+            glControl.Invalidate();
         }
     }
 }
