@@ -23,7 +23,7 @@ namespace GameBuilder.Library.OpenGL
         private Vector3 modelViewMatrixTranslationVector;
         private Vector3 projectionMatrixVector;
 
-        public FreeCamera Camera = new FreeCamera();
+        public /*ICamera*/FirstPersonCamera Camera = new FirstPersonCamera();
 
         private Shader shader;
         private VertexFloatBuffer buffer;
@@ -95,14 +95,14 @@ namespace GameBuilder.Library.OpenGL
             var fragment_source = shaderManager.LoadShader(ShaderType.FragmentShader, "test1");
 
             shader = new Shader(ref vertex_source, ref fragment_source);
-            /*
+            
             //setup the vertex buffer [vbo]
             buffer = new VertexFloatBuffer(VertexFormat.XYZ_COLOR, 3);
             //just a triangle with full r g b
-            buffer.AddVertex(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.8f);
-            buffer.AddVertex(0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.8f);
-            buffer.AddVertex(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.8f);
-            */
+            //buffer.AddVertex(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.8f);
+            //buffer.AddVertex(0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.8f);
+            //buffer.AddVertex(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.8f);
+
 
             buffer = new VertexFloatBuffer(VertexFormat.XYZ_COLOR, 36);
             buffer.AddVertex(-1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.8f);
@@ -167,12 +167,11 @@ namespace GameBuilder.Library.OpenGL
         public void Update(GLControl glControl)
         {
             Camera.Update();
-            //CameraPosition.X -= 0.001f;
-
-            //prepare data to shader
-
-            //set the world matrix
-            WorldMatrix = Matrix4.CreateTranslation(-CameraPosition);
+            //if (Camera.HandlesInput)
+            //{
+            //    // Recenter mouse pointer
+            //    System.Windows.Forms.Cursor.Position = new Point(glControl.Bounds.Left + glControl.Bounds.Width / 2, glControl.Bounds.Top + glControl.Bounds.Height / 2);
+            //}
 
             //set out triangle position with the modelview matrix
             //ModelviewMatrix = Matrix4.CreateTranslation(0.0f, 0.0f, -2.0f);
@@ -189,7 +188,7 @@ namespace GameBuilder.Library.OpenGL
             //GL   modelview * worldview * projection;
             //GLSL projection * worldview * modelview;
             //Matrix4 MVP_Matrix = ModelviewMatrix * WorldMatrix * ProjectionMatrix;
-            Matrix4 MVP_Matrix = Camera.ViewMatrix * WorldMatrix * Camera.ProjectionMatrix;
+            Matrix4 MVP_Matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
 
 
             //send to shader

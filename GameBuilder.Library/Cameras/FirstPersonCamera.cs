@@ -1,10 +1,12 @@
 ﻿using System.Windows.Input;
 using OpenTK;
+using System;
 
 namespace GameBuilder.Library.Cameras
 {
-    //http://www.madgamedev.com/post/2010/09/05/Article-Simple-3D-Camera-in-XNA.aspx
-    public class FreeCamera : ICamera
+    //http://neokabuto.blogspot.ca/2014/01/opentk-tutorial-5-basic-camera.html
+    //http://gamedev.stackexchange.com/questions/60266/create-a-fly-camera-with-lookat
+    public class FirstPersonCamera : ICamera
     {
         public Matrix4 ViewMatrix { get; private set; }
         public Matrix4 ProjectionMatrix { get; private set; }
@@ -17,7 +19,10 @@ namespace GameBuilder.Library.Cameras
         /// </summary>
         public bool HandlesInput { get; set; }
 
-        public FreeCamera()
+        private float _pitch;
+        private float _yaw;
+
+        public FirstPersonCamera()
         {
             Reset();
             HandlesInput = true; // TODO: remove here and handle from the IDE
@@ -38,12 +43,20 @@ namespace GameBuilder.Library.Cameras
             {
                 HandleInput();
             }
-            
-            ViewMatrix = Matrix4.LookAt(Position, Target, Vector3.UnitY);
+
+            //ViewMatrix = Matrix4.LookAt(Position, Target, Vector3.UnitY);
+            //ViewMatrix = Matrix4.CreateRotationY(_yaw) * Matrix4.CreateRotationY(_pitch) * Matrix4.CreateTranslation(Position) * ViewMatrix;
+            ViewMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationY(_yaw) * Matrix4.CreateRotationY(_pitch);
+            //ViewMatrix = Matrix4.LookAt(Position, Target, Vector3.UnitY);
         }
 
         private void HandleInput()
         {
+            if (Keyboard.IsKeyDown(Key.Escape))
+            {
+                HandlesInput = false;
+            }
+
             if (Keyboard.IsKeyDown(Key.W))
             {
                 Position = Vector3.Add(Position, Vector3.UnitZ);
@@ -73,6 +86,12 @@ namespace GameBuilder.Library.Cameras
             {
                 Position = Vector3.Add(Position, Vector3.UnitY);
             }
+        }
+
+        public void SetPitchYaw(float pitch, float yaw)
+        {
+            _pitch = pitch;
+            _yaw = yaw;
         }
     }
 }

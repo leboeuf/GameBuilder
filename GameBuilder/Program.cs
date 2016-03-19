@@ -1,6 +1,159 @@
 ﻿using System;
 using System.Drawing;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
+
+namespace OpenTKCameraPort
+{
+    class Program : GameWindow
+    {
+        private Matrix4 cameraMatrix;
+        private float[] mouseSpeed = new float[2];
+        private Vector2 mouseDelta;
+        private Vector3 location;
+        private Vector3 up = Vector3.UnitY;
+        private float pitch = 0.0f;
+        private float facing = 0.0f;
+        private float moveSensitivity = 1.5f;
+
+        public Program()
+            : base(1024, 768)
+        {
+            CursorVisible = false;
+            GL.Enable(EnableCap.DepthTest);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            cameraMatrix = Matrix4.Identity;
+            location = new Vector3(0f, 10f, 0f);
+            mouseDelta = new Vector2();
+
+            System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+
+            Mouse.Move += new EventHandler<MouseMoveEventArgs>(OnMouseMove);
+        }
+
+        void OnMouseMove(object sender, MouseMoveEventArgs e)
+        {
+            mouseDelta = new Vector2(e.XDelta, e.YDelta);
+        }
+
+        protected override void OnRenderFrame(FrameEventArgs e)
+        {
+            base.OnRenderFrame(e);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.LoadMatrix(ref cameraMatrix);
+
+            // Display some planes
+            for (int x = -10; x <= 10; x++)
+            {
+                for (int z = -10; z <= 10; z++)
+                {
+                    GL.PushMatrix();
+                    GL.Translate((float)x * 5f, 0f, (float)z * 5f);
+                    GL.Begin(BeginMode.Quads);
+                    GL.Color3(Color.Red);
+                    GL.Vertex3(1f, 4f, 0f);
+                    GL.Color3(Color.Orange);
+                    GL.Vertex3(-1f, 4f, 0f);
+                    GL.Color3(Color.Brown);
+                    GL.Vertex3(-1f, 0f, 0f);
+                    GL.Color3(Color.Maroon);
+                    GL.Vertex3(1f, 0f, 0f);
+                    GL.End();
+                    GL.PopMatrix();
+                }
+            }
+            SwapBuffers();
+        }
+
+        Point pointer_current, pointer_previous;
+        Size pointer_delta;
+
+        void UpdateMousePosition()
+        {
+            pointer_previous = pointer_current;
+            pointer_current = System.Windows.Forms.Cursor.Position;
+            pointer_delta = new Size(pointer_current.X - pointer_previous.X,
+                pointer_current.Y - pointer_previous.Y);
+
+            System.Windows.Forms.Cursor.Position =
+                new Point(Bounds.Left + (Bounds.Width / 2), Bounds.Top + (Bounds.Height / 2));
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+            UpdateMousePosition();
+
+            if (Keyboard[Key.W])
+            {
+                location.X += (float)Math.Cos(facing) * moveSensitivity;
+                location.Z += (float)Math.Sin(facing) * moveSensitivity;
+            }
+
+            if (Keyboard[Key.S])
+            {
+                location.X -= (float)Math.Cos(facing) * moveSensitivity;
+                location.Z -= (float)Math.Sin(facing) * moveSensitivity;
+            }
+
+            if (Keyboard[Key.A])
+            {
+                location.X -= (float)Math.Cos(facing + Math.PI / 2) * moveSensitivity;
+                location.Z -= (float)Math.Sin(facing + Math.PI / 2) * moveSensitivity;
+            }
+
+            if (Keyboard[Key.D])
+            {
+                location.X += (float)Math.Cos(facing + Math.PI / 2) * moveSensitivity;
+                location.Z += (float)Math.Sin(facing + Math.PI / 2) * moveSensitivity;
+            }
+
+            mouseSpeed[0] *= 0.9f;
+            mouseSpeed[1] *= 0.9f;
+            mouseSpeed[0] += mouseDelta.X / 1000f;
+            mouseSpeed[1] -= mouseDelta.Y / 1000f;
+            mouseDelta = new Vector2();
+
+            facing += mouseSpeed[0];
+            pitch += mouseSpeed[1];
+            Vector3 lookatPoint = new Vector3((float)Math.Cos(facing), (float)Math.Sin(pitch), (float)Math.Sin(facing));
+            cameraMatrix = Matrix4.LookAt(location, location + lookatPoint, up);
+
+            if (Keyboard[Key.Escape])
+                Exit();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
+
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref projection);
+        }
+
+
+
+        public static void Main(string[] args)
+        {
+            using (Program p = new Program())
+            {
+                p.Run();
+            }
+        }
+    }
+}
+
+/*using System;
+using System.Drawing;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using GameBuilder.Infrastructure.Shaders;
 using GameBuilder.Model.Constants;
@@ -635,4 +788,4 @@ namespace GameBuilder
             //_game.Run();
         }
     }
-}
+}*/
