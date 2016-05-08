@@ -5,7 +5,6 @@ using Gemini.Framework;
 using OpenTK.Graphics.OpenGL4;
 using GameBuilder.IDE.Utils;
 using OpenTK;
-using GameBuilder.Library.OpenGL;
 using Gemini.Modules.Inspector;
 using GameBuilder.IDE.Modules.Inspector;
 using Caliburn.Micro;
@@ -20,45 +19,45 @@ namespace GameBuilder.IDE.Modules.SceneViewer.ViewModels
 
         public override bool ShouldReopenOnStart => true;
 
-        public Vector3 CameraPosition
+        /*public Vector3 CameraPosition
         {
-            get { return _sceneView.OpenGLManager.CameraPosition; }
+            get { return OpenGLManager.CameraPosition; }
             set
             {
-                _sceneView.OpenGLManager.CameraPosition = value;
+                OpenGLManager.CameraPosition = value;
                 _sceneView.Invalidate();
             }
         }
 
         public Vector3 CameraRotation
         {
-            get { return _sceneView.OpenGLManager.CameraRotation; }
+            get { return OpenGLManager.CameraRotation; }
             set
             {
-                _sceneView.OpenGLManager.CameraRotation = value;
+                OpenGLManager.CameraRotation = value;
                 _sceneView.Invalidate();
             }
         }
 
         public Vector3 ModelViewMatrixTranslationVector
         {
-            get { return _sceneView.OpenGLManager.ModelViewMatrixTranslationVector; }
+            get { return OpenGLManager.ModelViewMatrixTranslationVector; }
             set
             {
-                _sceneView.OpenGLManager.ModelViewMatrixTranslationVector = value;
+                OpenGLManager.ModelViewMatrixTranslationVector = value;
                 _sceneView.Invalidate();
             }
         }
 
         public Vector3 ProjectionMatrixVector
         {
-            get { return _sceneView.OpenGLManager.ProjectionMatrixVector; }
+            get { return OpenGLManager.ProjectionMatrixVector; }
             set
             {
-                _sceneView.OpenGLManager.ProjectionMatrixVector = value;
+                OpenGLManager.ProjectionMatrixVector = value;
                 _sceneView.Invalidate();
             }
-        }
+        }*/
 
         public SceneViewModel()
         {
@@ -92,12 +91,12 @@ namespace GameBuilder.IDE.Modules.SceneViewer.ViewModels
 
         private void InspectScene()
         {
-            IoC.Get<IInspectorTool>().SelectedObject = new InspectableObjectBuilder()
-                .WithVector3Editor(this, x => x.CameraPosition)
-                .WithVector3Editor(this, x => x.ModelViewMatrixTranslationVector)
-                .WithVector3Editor(this, x => x.ProjectionMatrixVector)
-                .WithVector3Editor(this, x => x.CameraRotation)
-                .ToInspectableObject();
+            //IoC.Get<IInspectorTool>().SelectedObject = new InspectableObjectBuilder()
+            //    .WithVector3Editor(this, x => x.CameraPosition)
+            //    .WithVector3Editor(this, x => x.ModelViewMatrixTranslationVector)
+            //    .WithVector3Editor(this, x => x.ProjectionMatrixVector)
+            //    .WithVector3Editor(this, x => x.CameraRotation)
+            //    .ToInspectableObject();
         }
     }
 }

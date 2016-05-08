@@ -1,5 +1,4 @@
-﻿using GameBuilder.Library.OpenGL;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 
 namespace GameBuilder.IDE.Modules.SceneViewer.Views
 {
@@ -9,8 +8,6 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
         /// Replaces a shader and then redraws the scene.
         /// </summary>
         void ReplaceShader(ShaderType shaderType, string shaderCode);
-
-        OpenGLManager OpenGLManager { get; }
 
         void Invalidate();
     }

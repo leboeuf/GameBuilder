@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Drawing;
+using GameBuilder.Library;
+using GameBuilder.Library.Audio;
+using GameBuilder.Library.Entities;
+using GameBuilder.Library.Graphics;
+using GameBuilder.Library.Gui;
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace OpenTKCameraPort
-{
+{/*
     class Program : GameWindow
     {
         private Matrix4 cameraMatrix;
@@ -770,22 +776,117 @@ namespace Tutorial
         }
 
         #endregion
+    }*/
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var window = new EngineWindow();
+
+            GraphicsManager.SetClearColor(Color4.Blue);
+
+            var state = new GameState(GraphicsManager.RenderMode.Perspective, false);
+
+            //push the state to the state stack - top state is the state that runs
+            StateHandler.Push(state);
+
+            //var sound = Assets.GetSound("Main loop.wav");
+            //sound.Play();
+
+            window.Run(30.0f);
+        }
+    }
+
+    public class GameState : State
+    {
+
+        public GameState(GraphicsManager.RenderMode renderMode, bool overlay)
+            : base(renderMode, overlay)
+        {
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            //add a camera control for the state
+            FpsCamera camera = new FpsCamera(new Vector3(0, 0, 0));
+            this.SetCamera(camera);
+
+            //add some entities to the state
+
+            ModelEntity ent2 = new ModelEntity(0, 0, 0, "couch1.obj");
+            this.AddEntity(ent2);
+            ent2.SetScale(0.2f);
+
+            SpriteEntity sprite = new SpriteEntity(20, 0, -10, "tileset.png");
+            this.AddEntity(sprite);
+
+        }
+
+        public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs args)
+        {
+            base.OnKeyDown(sender, args);
+            if (args.Key == OpenTK.Input.Key.Escape)
+            {
+                StateHandler.Push(new GuiState(GraphicsManager.RenderMode.Ortho, true));
+            }
+        }
+    }
+
+    public class GuiState : State
+    {
+
+        public GuiState(GraphicsManager.RenderMode renderMode, bool overlay)
+            : base(renderMode, overlay)
+        {
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            //create a bunch of UI elements and link them to the state
+            ScrollPanel panel = new ScrollPanel(0, 0, 0, 400, 640, this);
+            panel.SetBackgroundColor(Color4.Red);
+            ScrollPanel panel2 = new ScrollPanel(420, 10, 0, 350, 500, this);
+
+            panel.SetContentDimensions(800, 800);
+            panel2.SetContentDimensions(400, 400);
+
+            Button button = new Button(10, 50, 0, 100, 100, "button.png", "button", this);
+            TextField field = new TextField(10, 10, 0, 100, this);
+            ListBox listBox = new ListBox(120, 10, 0, 200, 150, 10, this);
+
+            DropDownBox dropDown = new DropDownBox(50, 420, 0, 100, this);
+
+            TextBox textBox = new TextBox(10, 10, 0, 400, 400, this);
+            RadioButton radio = new RadioButton(200, 420, 0, this);
+
+            panel.AddControl(panel2);
+
+            panel.AddControl(dropDown);
+            panel.AddControl(textBox);
+            panel.AddControl(radio);
+
+            panel2.AddControl(button);
+            panel2.AddControl(field);
+            panel2.AddControl(listBox);
+
+            this.AddControl(panel);
+
+        }
+
+        public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs args)
+        {
+            base.OnKeyDown(sender, args);
+            if (args.Key == OpenTK.Input.Key.Escape)
+            {
+                StateHandler.Pop();
+            }
+        }
+
     }
 }
 
-namespace GameBuilder
-{
-    class Program
-    {
-        private static Game _game;
-
-        static void Main(string[] args)
-        {
-            var g = new Tutorial.GL4Window();
-            g.Run();
-
-            //_game = new Game(800, 600);
-            //_game.Run();
-        }
-    }
-}*/

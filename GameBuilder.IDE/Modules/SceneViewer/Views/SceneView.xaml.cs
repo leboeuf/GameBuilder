@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Input;
 using Caliburn.Micro;
-using GameBuilder.Library.OpenGL;
 using Gemini.Modules.Output;
 using OpenTK.Graphics.OpenGL4;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using UserControl = System.Windows.Controls.UserControl;
 using System.Windows.Media;
-using Gemini.Modules.Inspector;
-using GameBuilder.IDE.Modules.Inspector;
-using GameBuilder.IDE.Modules.SceneViewer.ViewModels;
+using GameBuilder.Library;
+using GameBuilder.Library.Entities;
+using GameBuilder.Library.Graphics;
 using OpenTK;
 
 namespace GameBuilder.IDE.Modules.SceneViewer.Views
@@ -26,20 +22,6 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
     public partial class SceneView : UserControl, ISceneView, IDisposable
     {
         private readonly IOutput _output;
-        public OpenGLManager _openGLManager = new OpenGLManager();
-
-        // A yaw and pitch applied to the viewport based on input
-        private Point _previousPosition;
-        private float _yaw = 0.5f;
-        private float _pitch = 0.2f;
-
-        public OpenGLManager OpenGLManager
-        {
-            get
-            {
-                return _openGLManager;
-            }
-        }
 
         public SceneView()
         {
@@ -51,16 +33,10 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
 
         private void GLControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (!_openGLManager.Camera.HandlesInput)
-            {
-                return;
-            }
-
-            _yaw += (float)(e.Location.X - _previousPosition.X) * .01f;
-            _pitch += (float)(e.Location.Y - _previousPosition.Y) * .01f;
-            _openGLManager.Camera.SetPitchYaw(_pitch, _yaw);
-
-            _previousPosition = e.Location;
+            //if (!OpenGLManager.Camera.HandlesInput)
+            //{
+            //    return;
+            //}
         }
 
         public void Dispose()
@@ -70,18 +46,27 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
 
         private void GLControl_Paint(object sender, PaintEventArgs e)
         {
-            _openGLManager.Draw(glControl);
+            GraphicsManager.Draw(glControl);
         }
 
         private void GLControl_Load(object sender, EventArgs e)
         {
-            _openGLManager.Load(glControl);
+            State state = new GameState(GraphicsManager.RenderMode.Perspective, false);
+            StateHandler.Push(state);
+
+            GraphicsManager.Initialize(glControl);
             CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
 
         private void CompositionTarget_Rendering(object sender, EventArgs e)
         {
-            _openGLManager.Update(glControl);
+            GraphicsManager.SetProjection(this.glControl.ClientRectangle);
+
+            StateHandler.UpdateFrame(null);
+
+            GraphicsManager.Clear();
+            StateHandler.RenderFrame(null);
+
             glControl.Invalidate();
         }
 
@@ -89,7 +74,7 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
         {
             try
             {
-                _openGLManager.ReplaceShader(shaderType, shaderCode);
+                //GraphicsManager.ReplaceShader(shaderType, shaderCode);
                 glControl.Invalidate();
             }
             catch (ApplicationException)
@@ -107,8 +92,28 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
         {
             if (e.Button == MouseButtons.Left)
             {
-                _openGLManager.Camera.HandlesInput = true;
+                //GraphicsManager.Camera.HandlesInput = true;
             }
+        }
+    }
+
+    public class GameState : State
+    {
+        public GameState(GraphicsManager.RenderMode renderMode, bool overlay)
+            : base(renderMode, overlay)
+        {
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            var camera = new FpsCamera(new Vector3(0, 0, 0));
+            this.SetCamera(camera);
+
+            var ent2 = new ModelEntity(0, 0, 0, "couch1.obj");
+            this.AddEntity(ent2);
+            ent2.SetScale(0.2f);
         }
     }
 }

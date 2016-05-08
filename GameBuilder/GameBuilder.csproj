@@ -118,6 +118,12 @@
   <ItemGroup>
     <Content Include="References.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameBuilder.Library\GameBuilder.Library.csproj">
+      <Project>{A8599123-45F3-49CE-B5C9-E9C7359DC7E2}</Project>
+      <Name>GameBuilder.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

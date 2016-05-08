@@ -53,25 +53,52 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cameras\FirstPersonCamera.cs" />
-    <Compile Include="Cameras\FreeCamera.cs" />
-    <Compile Include="Cameras\ICamera.cs" />
-    <Compile Include="OpenGL\Buffers\VertexFloatBuffer.cs" />
-    <Compile Include="OpenGL\OpenGLManager.cs" />
-    <Compile Include="OpenGL\Shaders\Shader.cs" />
-    <Compile Include="OpenGL\Shaders\ShaderManager.cs" />
+    <Compile Include="Assets.cs" />
+    <Compile Include="Audio\Playback.cs" />
+    <Compile Include="Audio\Sound.cs" />
+    <Compile Include="Audio\soundManager.cs" />
+    <Compile Include="EngineWindow.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\ModelEntity.cs" />
+    <Compile Include="Entities\SpriteEntity.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Graphics\BitmapFont.cs" />
+    <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Graphics\FpsCamera.cs" />
+    <Compile Include="Graphics\GraphicsManager.cs" />
+    <Compile Include="Graphics\Lighting.cs" />
+    <Compile Include="Graphics\Material.cs" />
+    <Compile Include="Graphics\Model.cs" />
+    <Compile Include="Graphics\ModelMesh.cs" />
+    <Compile Include="Graphics\Shader.cs" />
+    <Compile Include="Graphics\Texture.cs" />
+    <Compile Include="Gui\Button.cs" />
+    <Compile Include="Gui\Control.cs" />
+    <Compile Include="Gui\DropDownBox.cs" />
+    <Compile Include="Gui\HorizontalScrollBar.cs" />
+    <Compile Include="Gui\ListBox.cs" />
+    <Compile Include="Gui\Panel.cs" />
+    <Compile Include="Gui\RadioButton.cs" />
+    <Compile Include="Gui\ScrollPanel.cs" />
+    <Compile Include="Gui\TextBox.cs" />
+    <Compile Include="Gui\TextField.cs" />
+    <Compile Include="Gui\VerticalScrollBar.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Listeners\KeyListener.cs" />
+    <Compile Include="Listeners\MouseListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="StateHandler.cs" />
+    <Compile Include="Utilities\ModelUtility.cs" />
+    <Compile Include="Utilities\ShaderUtility.cs" />
+    <Compile Include="Utilities\TimerUtility.cs" />
+    <Compile Include="Utilities\WavefrontLoader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Shaders\Fragment\test1.frag">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Shaders\Vertex\test1.vert">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
