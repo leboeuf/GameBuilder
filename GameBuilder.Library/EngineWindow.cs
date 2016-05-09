@@ -11,14 +11,11 @@ namespace GameBuilder.Library
     {
         AudioContext AC;
 
-        public EngineWindow()
-            : base(1200, 800, new GraphicsMode(32, 24, 8, 4), "OpenTK", GameWindowFlags.Default, DisplayDevice.Default, 3, 1, GraphicsContextFlags.ForwardCompatible)
+        public EngineWindow(string windowTitle, int width = 1200, int height = 800, GameWindowFlags wameWindowFlags = GameWindowFlags.Default)
+            : base(width, height, new GraphicsMode(32, 24, 8, 4), windowTitle, wameWindowFlags, DisplayDevice.Default, 4, 0, GraphicsContextFlags.ForwardCompatible)
         {
-            Global.window = this;
-            string versionOpenGL = GL.GetString(StringName.Version);
-            string shaderVersion = GL.GetString(StringName.ShadingLanguageVersion);
-            Console.WriteLine("OpenGL: " + versionOpenGL);
-            Console.WriteLine("GLSL: " + shaderVersion);
+            Global.Window = this;
+            Console.WriteLine($"OpenGL version: {GL.GetInteger(GetPName.MajorVersion)}.{GL.GetInteger(GetPName.MinorVersion)}; GLSL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
 
             //AC = new AudioContext();
         }

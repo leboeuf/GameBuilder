@@ -2,6 +2,6 @@
 {
     public class Global
     {
-        public static EngineWindow window;
+        public static EngineWindow Window;
     }
 }

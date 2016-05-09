@@ -6,7 +6,7 @@ namespace GameBuilder.Library
 {
     public class Input
     {
-        private static KeyboardState prevKeyState;// = Keyboard.GetState();
+        private static KeyboardState prevKeyState;// = Keyboard.GetState(); // TODO: wait for fix from community (new nuget pkg?) https://github.com/opentk/opentk/issues/382
         private static KeyboardState currentKeyState = prevKeyState;
 
         private static MouseState prevMouseState;// = Mouse.GetState();
@@ -141,12 +141,12 @@ namespace GameBuilder.Library
 
         public static int GetRelativeMouseX()
         {
-            return Global.window.Mouse.X;
+            return Global.Window.Mouse.X;
         }
 
         public static int GetRelativeMouseY()
         {
-            return Global.window.Mouse.Y;
+            return Global.Window.Mouse.Y;
         }
 
         public static Vector2 GetRelativeMousePosition()
