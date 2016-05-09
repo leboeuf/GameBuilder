@@ -31,9 +31,9 @@ namespace GameBuilder.IDE.Modules.SceneViewer
 
             //_inspectorTool.SelectedObject = new InspectableObjectBuilder().WithObjectProperties(Shell.ActiveItem, pd => true).ToInspectableObject();
 
-            //_inspectorTool.SelectedObject = new InspectableObjectBuilder()
-            //    .WithVector3Editor(sceneViewModel, x => x.CameraPosition)
-            //    .ToInspectableObject();
+            _inspectorTool.SelectedObject = new InspectableObjectBuilder()
+                .WithMatrix4Editor(sceneViewModel, x => x.CameraViewMatrix)
+                .ToInspectableObject();
         }
 	}
 }

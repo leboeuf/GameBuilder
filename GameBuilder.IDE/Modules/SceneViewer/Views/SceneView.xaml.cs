@@ -21,6 +21,7 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
     /// </remarks>
     public partial class SceneView : UserControl, ISceneView, IDisposable
     {
+        public State State { get; set; }
         private readonly IOutput _output;
 
         public SceneView()
@@ -51,8 +52,8 @@ namespace GameBuilder.IDE.Modules.SceneViewer.Views
 
         private void GLControl_Load(object sender, EventArgs e)
         {
-            State state = new GameState(GraphicsManager.RenderMode.Perspective, false);
-            StateHandler.Push(state);
+            State = new GameState(GraphicsManager.RenderMode.Perspective, false);
+            StateHandler.Push(State);
 
             GraphicsManager.Initialize(glControl);
             CompositionTarget.Rendering += CompositionTarget_Rendering;

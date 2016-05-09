@@ -19,45 +19,15 @@ namespace GameBuilder.IDE.Modules.SceneViewer.ViewModels
 
         public override bool ShouldReopenOnStart => true;
 
-        /*public Vector3 CameraPosition
+        public Matrix4 CameraViewMatrix
         {
-            get { return OpenGLManager.CameraPosition; }
+            get { return _sceneView?.State?.Camera.ViewMatrix ?? Matrix4.Zero; }
             set
             {
-                OpenGLManager.CameraPosition = value;
+                _sceneView.State.Camera.ViewMatrix = value;
                 _sceneView.Invalidate();
             }
         }
-
-        public Vector3 CameraRotation
-        {
-            get { return OpenGLManager.CameraRotation; }
-            set
-            {
-                OpenGLManager.CameraRotation = value;
-                _sceneView.Invalidate();
-            }
-        }
-
-        public Vector3 ModelViewMatrixTranslationVector
-        {
-            get { return OpenGLManager.ModelViewMatrixTranslationVector; }
-            set
-            {
-                OpenGLManager.ModelViewMatrixTranslationVector = value;
-                _sceneView.Invalidate();
-            }
-        }
-
-        public Vector3 ProjectionMatrixVector
-        {
-            get { return OpenGLManager.ProjectionMatrixVector; }
-            set
-            {
-                OpenGLManager.ProjectionMatrixVector = value;
-                _sceneView.Invalidate();
-            }
-        }*/
 
         public SceneViewModel()
         {

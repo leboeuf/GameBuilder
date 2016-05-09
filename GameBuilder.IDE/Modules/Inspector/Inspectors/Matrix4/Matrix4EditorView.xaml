@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="GameBuilder.IDE.Modules.Inspector.Inspectors.Matrix4.Matrix4EditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GameBuilder.IDE.Modules.Inspector.Inspectors.Matrix4"
+             xmlns:gemini="clr-namespace:Gemini.Modules.Inspector.Controls;assembly=Gemini.Modules.Inspector"
+             mc:Ignorable="d" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="34"/>
+            <ColumnDefinition Width="1*" MinWidth="30"/>
+            <ColumnDefinition Width="34"/>
+            <ColumnDefinition Width="1*" MinWidth="30"/>
+            <ColumnDefinition Width="34"/>
+            <ColumnDefinition Width="1*" MinWidth="30"/>
+            <ColumnDefinition Width="34"/>
+            <ColumnDefinition Width="1*" MinWidth="30"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="M11"/>
+        <gemini:NumericTextBox Grid.Row="0" Grid.Column="1" Value="{Binding M11}" VerticalAlignment="Center"/>
+        <Label Grid.Row="0" Grid.Column="2" Content="M12"/>
+        <gemini:NumericTextBox Grid.Row="0" Grid.Column="3" Value="{Binding M12}" VerticalAlignment="Center"/>
+        <Label Grid.Row="0" Grid.Column="4" Content="M13"/>
+        <gemini:NumericTextBox Grid.Row="0" Grid.Column="5" Value="{Binding M13}" VerticalAlignment="Center"/>
+        <Label Grid.Row="0" Grid.Column="6" Content="M14"/>
+        <gemini:NumericTextBox Grid.Row="0" Grid.Column="7" Value="{Binding M14}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="M21"/>
+        <gemini:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding M21}" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="2" Content="M22"/>
+        <gemini:NumericTextBox Grid.Row="1" Grid.Column="3" Value="{Binding M22}" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="4" Content="M23"/>
+        <gemini:NumericTextBox Grid.Row="1" Grid.Column="5" Value="{Binding M23}" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="6" Content="M24"/>
+        <gemini:NumericTextBox Grid.Row="1" Grid.Column="7" Value="{Binding M24}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="M31"/>
+        <gemini:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding M31}" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="2" Content="M32"/>
+        <gemini:NumericTextBox Grid.Row="2" Grid.Column="3" Value="{Binding M32}" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="4" Content="M33"/>
+        <gemini:NumericTextBox Grid.Row="2" Grid.Column="5" Value="{Binding M33}" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="6" Content="M34"/>
+        <gemini:NumericTextBox Grid.Row="2" Grid.Column="7" Value="{Binding M34}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Content="M41"/>
+        <gemini:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding M41}" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="2" Content="M42"/>
+        <gemini:NumericTextBox Grid.Row="3" Grid.Column="3" Value="{Binding M42}" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="4" Content="M43"/>
+        <gemini:NumericTextBox Grid.Row="3" Grid.Column="5" Value="{Binding M43}" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="6" Content="M44"/>
+        <gemini:NumericTextBox Grid.Row="3" Grid.Column="7" Value="{Binding M44}" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>

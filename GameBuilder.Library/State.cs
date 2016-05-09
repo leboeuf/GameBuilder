@@ -19,7 +19,7 @@ namespace GameBuilder.Library
         protected List<Entity> _entities;
         protected List<Control> _controls;
 
-        protected Camera _camera = null;
+        public Camera Camera = null;
         protected GraphicsManager.RenderMode _renderMode;
 
         public State(GraphicsManager.RenderMode renderMode, bool overlay)
@@ -61,7 +61,7 @@ namespace GameBuilder.Library
 
         public void SetCamera(Camera camera)
         {
-            _camera = camera;
+            Camera = camera;
         }
 
         public void AddEntity(Entity entity)
@@ -154,9 +154,9 @@ namespace GameBuilder.Library
         {
             if (!_active) return;
 
-            if (_camera != null)
+            if (Camera != null)
             {
-                _camera.Update();
+                Camera.Update();
             }
 
             foreach (Entity entity in _entities)
@@ -176,9 +176,9 @@ namespace GameBuilder.Library
 
             GraphicsManager.PushWorldMatrix();
 
-            if (_camera != null)
+            if (Camera != null)
             {
-                _camera.LookThrough();
+                Camera.LookThrough();
             }
 
             GraphicsManager.PushWorldMatrix();

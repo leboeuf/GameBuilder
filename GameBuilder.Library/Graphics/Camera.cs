@@ -4,11 +4,11 @@ namespace GameBuilder.Library.Graphics
 {
     public class Camera
     {
-        protected Matrix4 viewMatrix;
+        public Matrix4 ViewMatrix;
 
         public Camera(Vector3 _position)
         {
-            viewMatrix = Matrix4.CreateTranslation(_position);
+            ViewMatrix = Matrix4.CreateTranslation(_position);
         }
 
         public virtual void Update()
@@ -17,7 +17,7 @@ namespace GameBuilder.Library.Graphics
 
         public virtual void LookThrough()
         {
-            GraphicsManager.SetWorldMatrix(viewMatrix);
+            GraphicsManager.SetWorldMatrix(ViewMatrix);
         }
 
     }

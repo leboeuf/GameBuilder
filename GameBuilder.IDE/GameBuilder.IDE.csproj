@@ -137,6 +137,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Modules\Inspector\InspectorExtensions.cs" />
+    <Compile Include="Modules\Inspector\Inspectors\Matrix4\Matrix4EditorModel.cs" />
+    <Compile Include="Modules\Inspector\Inspectors\Matrix4\Matrix4EditorView.xaml.cs">
+      <DependentUpon>Matrix4EditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Inspector\Inspectors\Vector3\Vector3EditorModel.cs" />
     <Compile Include="Modules\Inspector\Inspectors\Vector3\Vector3EditorView.xaml.cs">
       <DependentUpon>Vector3EditorView.xaml</DependentUpon>
@@ -210,6 +214,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Modules\Inspector\Inspectors\Matrix4\Matrix4EditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Modules\Inspector\Inspectors\Vector3\Vector3EditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
